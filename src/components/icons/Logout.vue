@@ -1,0 +1,39 @@
+<script>
+export default {
+  name: "Logout",
+};
+</script>
+
+<template>
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g opacity="0.5">
+      <path
+        d="M20 4L25.3333 4C26.0406 4 26.7189 4.28095 27.219 4.78105C27.7191 5.28115 28 5.95942 28 6.66667L28 25.3333C28 26.0406 27.719 26.7189 27.219 27.219C26.7189 27.719 26.0406 28 25.3333 28L20 28"
+        stroke="#3C3D43"
+        stroke-width="2.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M10.6667 9.33329L4 16L10.6667 22.6666"
+        stroke="#3C3D43"
+        stroke-width="2.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M4 16L20 16"
+        stroke="#3C3D43"
+        stroke-width="2.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+  </svg>
+</template>
