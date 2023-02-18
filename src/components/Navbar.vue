@@ -13,11 +13,11 @@ const isMenuOpen = ref(false);
   <section class="py-4 shadow-sm">
     <Container>
       <div class="flex items-center justify-between text-lg">
-        <div class="hidden md:block">
+        <div>
           <Logo />
         </div>
 
-        <SearchBar />
+        <!-- <SearchBar /> -->
 
         <div class="flex items-center gap-x-2">
           <div class="w-[40px] h-[40px] rounded-full relative">

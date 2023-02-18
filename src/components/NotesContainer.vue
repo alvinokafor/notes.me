@@ -1,32 +1,23 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed, reactive, onMounted } from "vue";
 
 import Container from "./Container.vue";
 import NoteCard from "./NoteCard.vue";
 import AddNote from "./AddNote.vue";
+import SearchBar from "./SearchBar.vue";
 
 const date = new Date();
 const formatedDate = new Intl.DateTimeFormat("en-us", {
   dateStyle: "medium",
 }).format(date);
 
-const notesDB = ref([
-  {
-    id: crypto.randomUUID(),
-    body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quo nam minus est eligendi unde inventore",
-    date: formatedDate,
-  },
-  {
-    id: crypto.randomUUID(),
-    body: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    date: formatedDate,
-  },
-  {
-    id: crypto.randomUUID(),
-    body: "Impedit quo nam minus est eligendi unde inventore",
-    date: formatedDate,
-  },
-]);
+const notesDB = ref([]);
+
+const filteredNotes = ref([]);
+
+onMounted(() => {
+  filteredNotes.value = notesDB.value;
+});
 
 function addNote(childEvent) {
   notesDB.value.unshift({
@@ -38,19 +29,33 @@ function addNote(childEvent) {
 }
 
 function deleteNote(noteID) {
-  notesDB.value = notesDB.value.filter((note) => note.id !== noteID);
+  filteredNotes.value = filteredNotes.value.filter(
+    (note) => note.id !== noteID
+  );
+}
+
+function filterNotes(searchQuery) {
+  filteredNotes.value = notesDB.value.filter((note) =>
+    note.body.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 }
 </script>
 
 <template>
   <Container>
+    <SearchBar @search="filterNotes" />
     <section
-      class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-9 gap-y-4"
+      class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-9 gap-y-4"
     >
       <AddNote @new-note="addNote" />
+
+      <p class="text-3xl text-grey self-center" v-if="notesDB <= 0">
+        Add a new note ✍🏾
+      </p>
       <NoteCard
         @remove-note="deleteNote"
-        v-for="note in notesDB"
+        v-else
+        v-for="note in filteredNotes"
         :note="note"
         :key="note.id"
       />

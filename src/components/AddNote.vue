@@ -6,6 +6,7 @@ const emit = defineEmits(["newNote"]);
 
 function handleSubmit() {
   emit("newNote", noteBody.value);
+  noteBody.value = "";
 }
 </script>
 
@@ -14,14 +15,14 @@ function handleSubmit() {
     <form @submit.prevent="handleSubmit">
       <textarea
         v-model.lazy="noteBody"
-        class="bg-transparent resize-none w-full"
+        class="bg-transparent outline-none resize-none w-full"
         name=""
         id=""
         cols="30"
         rows="8"
         placeholder="Enter a note"
       ></textarea>
-      <button type="submit">Add Note</button>
+      <button type="submit">Add Note ➕</button>
     </form>
   </div>
 </template>
