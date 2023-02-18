@@ -11,7 +11,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="bg-slate-700 text-white rounded-xl py-6 px-7">
+  <div class="bg-[#AEDFE8]/40 text-primary rounded-xl py-6 px-7">
     <form @submit.prevent="handleSubmit">
       <textarea
         v-model.lazy="noteBody"

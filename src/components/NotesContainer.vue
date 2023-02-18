@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, reactive, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 import Container from "./Container.vue";
 import NoteCard from "./NoteCard.vue";
@@ -11,9 +11,15 @@ const formatedDate = new Intl.DateTimeFormat("en-us", {
   dateStyle: "medium",
 }).format(date);
 
-const notesDB = ref([]);
+// const postColors = ["#FDBAA3", "#FBEB95", "#B6A5CB", "#97D2BC"];
 
+// function shuffle(postColors) {
+//   return postColors[Math.floor(Math.random() * postColors.length)];
+// }
+
+const notesDB = ref([]);
 const filteredNotes = ref([]);
+// let postColor;
 
 onMounted(() => {
   filteredNotes.value = notesDB.value;
@@ -25,7 +31,6 @@ function addNote(childEvent) {
     body: childEvent,
     date: formatedDate,
   });
-  console.log(childEvent);
 }
 
 function deleteNote(noteID) {
