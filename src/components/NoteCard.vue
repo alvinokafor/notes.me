@@ -4,6 +4,11 @@ import Trash from "./icons/Trash.vue";
 const props = defineProps({
   note: Object,
 });
+
+const emit = defineEmits(["removeNote"]);
+function handleDelete(noteID) {
+  emit("removeNote", noteID);
+}
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const props = defineProps({
 
     <div class="flex justify-between items-center">
       <p>{{ note.date }}</p>
-      <button>
+      <button @click="handleDelete(note.id)">
         <Trash />
       </button>
     </div>

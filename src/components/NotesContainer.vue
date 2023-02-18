@@ -36,6 +36,10 @@ function addNote(childEvent) {
   });
   console.log(childEvent);
 }
+
+function deleteNote(noteID) {
+  notesDB.value = notesDB.value.filter((note) => note.id !== noteID);
+}
 </script>
 
 <template>
@@ -44,7 +48,12 @@ function addNote(childEvent) {
       class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-9 gap-y-4"
     >
       <AddNote @new-note="addNote" />
-      <NoteCard v-for="note in notesDB" :note="note" :key="note.id" />
+      <NoteCard
+        @remove-note="deleteNote"
+        v-for="note in notesDB"
+        :note="note"
+        :key="note.id"
+      />
     </section>
   </Container>
 </template>
