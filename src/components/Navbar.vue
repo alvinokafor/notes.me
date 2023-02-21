@@ -1,12 +1,34 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
 
 import Logout from "./icons/Logout.vue";
 import Logo from "./icons/Logo.vue";
 import Container from "./Container.vue";
-import SearchBar from "./SearchBar.vue";
 
 const isMenuOpen = ref(false);
+const isLoggedIn = ref(false);
+const router = useRouter();
+let auth;
+
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isLoggedIn.value = true;
+    } else {
+      isLoggedIn.value = false;
+    }
+  });
+});
+
+function handleLogout() {
+  signOut(auth).then(() => {
+    router.push("/login");
+  });
+  console.log("logged out");
+}
 </script>
 
 <template>
@@ -29,6 +51,7 @@ const isMenuOpen = ref(false);
             />
 
             <button
+              @click="handleLogout"
               v-if="isMenuOpen"
               class="absolute flex items-center gap-x-2 right-1 top-12 text-primary bg-slate-200 px-3 py-2 text-base rounded-lg"
             >

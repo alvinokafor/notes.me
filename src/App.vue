@@ -5,9 +5,5 @@ import NotesContainer from "./components/NotesContainer.vue";
 </script>
 
 <template>
-  <main class="mb-10">
-    <Navbar />
-    <Welcome />
-    <NotesContainer />
-  </main>
+  <RouterView />
 </template>

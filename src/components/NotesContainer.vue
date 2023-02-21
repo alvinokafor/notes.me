@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, computed } from "vue";
 
 import Container from "./Container.vue";
 import NoteCard from "./NoteCard.vue";
@@ -11,19 +11,8 @@ const formatedDate = new Intl.DateTimeFormat("en-us", {
   dateStyle: "medium",
 }).format(date);
 
-// const postColors = ["#FDBAA3", "#FBEB95", "#B6A5CB", "#97D2BC"];
-
-// function shuffle(postColors) {
-//   return postColors[Math.floor(Math.random() * postColors.length)];
-// }
-
 const notesDB = ref([]);
-const filteredNotes = ref([]);
-// let postColor;
-
-onMounted(() => {
-  filteredNotes.value = notesDB.value;
-});
+const query = ref("");
 
 function addNote(childEvent) {
   notesDB.value.unshift({
@@ -34,21 +23,23 @@ function addNote(childEvent) {
 }
 
 function deleteNote(noteID) {
-  filteredNotes.value = filteredNotes.value.filter(
-    (note) => note.id !== noteID
-  );
+  notesDB.value = notesDB.value.filter((note) => note.id !== noteID);
 }
 
-function filterNotes(searchQuery) {
-  filteredNotes.value = notesDB.value.filter((note) =>
-    note.body.toLowerCase().includes(searchQuery.toLowerCase())
+const filteredNotes = computed(() => {
+  return notesDB.value.filter((note) =>
+    note.body.toLowerCase().includes(query.value.toLowerCase())
   );
+});
+
+function setSearch(searchQuery) {
+  query.value = searchQuery;
 }
 </script>
 
 <template>
   <Container>
-    <SearchBar @search="filterNotes" />
+    <SearchBar @search="setSearch" />
     <section
       class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-9 gap-y-4"
     >
